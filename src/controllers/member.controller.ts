@@ -18,6 +18,19 @@ export class MemberController {
     public memberRepository: MemberRepository,
   ) { }
 
+  @post('/members/membershipproposal', {
+    responses: {
+      '200': {
+        description: 'Submits a membership proposal',
+        content: { 'application/json': { schema: { 'x-ts-type': Member } } },
+      },
+    },
+  })
+  async createMembershipProposal(@requestBody() member: Member): Promise<Member> {
+    member.status = 'waiting';
+    return await this.memberRepository.create(member);
+  }
+
   @get('/members/nonce', {
     responses: {
       '200': {
@@ -52,11 +65,26 @@ export class MemberController {
   })
   async create(@requestBody() member: Member): Promise<Member> {
     member.nonce = Math.floor(Math.random() * 1000000);
-    console.log(member);
     return await this.memberRepository.create(member);
   }
 
   @get('/members', {
+    responses: {
+      '200': {
+        description: 'Array of Member model instances',
+        content: {
+          'application/json': {
+            schema: { type: 'array', items: { 'x-ts-type': Member } },
+          },
+        },
+      },
+    },
+  })
+  async getAll(): Promise<Member[]> {
+    return await this.memberRepository.find();
+  }
+
+  @get('/members/getfiltered', {
     responses: {
       '200': {
         description: 'Array of Member model instances',
