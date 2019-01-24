@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Period extends Entity {
@@ -7,13 +7,7 @@ export class Period extends Entity {
     id: true,
     required: true,
   })
-  publicAddress: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  name: string;
+  id: string;
 
   @property({
     type: 'number',

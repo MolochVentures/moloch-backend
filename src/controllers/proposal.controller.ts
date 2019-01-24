@@ -3,6 +3,7 @@ import {
   repository,
 } from '@loopback/repository';
 import {
+  patch,
   post,
   param,
   get,
@@ -18,6 +19,10 @@ export class ProposalController {
     public proposalRepository: ProposalRepository,
   ) { }
 
+  /**
+   * Creates a new project proposal
+   * @param proposal: project proposal to be created
+   */
   @post('/proposals/projectproposal', {
     responses: {
       '200': {
@@ -27,8 +32,6 @@ export class ProposalController {
     },
   })
   async createProjectProposal(@requestBody() proposal: Proposal): Promise<Proposal> {
-    // TODO: What should be the right values for these 3?
-    // TODO: Which ones should be required? Because currently I have no values for closingTime, gracePeriod and shares.
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -39,28 +42,37 @@ export class ProposalController {
     return await this.proposalRepository.create(proposal);
   }
 
-  @post('/proposals/membershipproposal', {
+  @patch('/proposals/{id}', {
     responses: {
-      '200': {
-        description: 'Submits a membership proposal',
-        content: { 'application/json': { schema: { 'x-ts-type': Proposal } } },
+      '204': {
+        description: 'Period PATCH success',
       },
     },
   })
-  async createMembershipProposal(@requestBody() proposal: Proposal): Promise<Proposal> {
-    // TODO: What should be the right values for these 3?
-    // TODO: Which ones should be required? Because currently I have no values for closingTime, gracePeriod and shares.
-    var S4 = function () {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    proposal.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-    proposal.status = 'waiting';
-    proposal.closingTime = '';
-    proposal.gracePeriod = '';
-    return await this.proposalRepository.create(proposal);
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody() proposal: Proposal,
+  ): Promise<void> {
+    await this.proposalRepository.updateById(id, proposal);
   }
 
   @get('/proposals', {
+    responses: {
+      '200': {
+        description: 'Array of Proposal model instances',
+        content: {
+          'application/json': {
+            schema: { type: 'array', items: { 'x-ts-type': Proposal } },
+          },
+        },
+      },
+    },
+  })
+  async getAll(): Promise<Proposal[]> {
+    return await this.proposalRepository.find();
+  }
+
+  @get('/proposals/getfiltered', {
     responses: {
       '200': {
         description: 'Array of Proposal model instances',
