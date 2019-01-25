@@ -1,13 +1,14 @@
 import {
+  Filter,
   repository,
-  Filter
 } from '@loopback/repository';
 import {
+  patch,
   post,
   param,
   get,
-  requestBody,
   getFilterSchemaFor,
+  requestBody,
 } from '@loopback/rest';
 import { Member } from '../models';
 import { MemberRepository } from '../repositories';
@@ -18,29 +19,19 @@ export class MemberController {
     public memberRepository: MemberRepository,
   ) { }
 
-  @post('/members/membershipproposal', {
+  @patch('/members/membershipproposal/{id}', {
     responses: {
-      '200': {
-        description: 'Submits a membership proposal',
-        content: { 'application/json': { schema: { 'x-ts-type': Member } } },
+      '204': {
+        description: 'Member PATCH success',
       },
     },
   })
-  async createMembershipProposal(@requestBody() member: Member): Promise<Member> {
+  async createMembershipProposal(
+    @param.path.string('id') id: string,
+    @requestBody() member: Member,
+  ): Promise<Member> {
     member.status = 'waiting';
-    return await this.memberRepository.create(member);
-  }
-
-  @get('/members/nonce', {
-    responses: {
-      '200': {
-        description: 'Member model instance',
-        content: { 'application/json': { schema: { 'x-ts-type': Member } } },
-      },
-    },
-  })
-  nonce(): number {
-    return Math.floor(Math.random() * 1000000);
+    return await this.memberRepository.updateById(id, member).then(result => { return member });
   }
 
   @get('/members/{publicAddress}', {

@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Asset extends Entity {
@@ -11,9 +11,8 @@ export class Asset extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  symbol: string;
+  symbol: string; // TODO: Make it required again
 
   @property({
     type: 'number',
@@ -23,15 +22,13 @@ export class Asset extends Entity {
 
   @property({
     type: 'number',
-    required: true,
   })
-  price: number;
+  price: number; // TODO: Make it required again
 
   @property({
     type: 'string',
-    required: true,
   })
-  logo: string;
+  logo: string; // TODO: Make it required again
 
 
   constructor(data?: Partial<Asset>) {

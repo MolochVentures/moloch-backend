@@ -1,5 +1,4 @@
 export * from './ping.controller';
-export * from './authentication.controller';
 export * from './member.controller';
 export * from './asset.controller';
 export * from './event.controller';

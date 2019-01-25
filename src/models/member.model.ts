@@ -18,6 +18,11 @@ export class Member extends Entity {
   @property({
     type: 'string',
   })
+  description?: string;
+
+  @property({
+    type: 'string',
+  })
   name?: string;
 
   @property({
