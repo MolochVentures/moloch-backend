@@ -1,7 +1,8 @@
 {
   "ids": {
     "User": 1.112671014000922e+48,
-    "Proposal": 6
+    "Proposal": 7,
+    "Member": 9.713054903201896e+47
   },
   "models": {
     "User": {
@@ -15,7 +16,12 @@
       "71410b83-e916-e15e-910c-0f8a6d21bd92": "{\"id\":\"71410b83-e916-e15e-910c-0f8a6d21bd92\",\"title\":\"Test 2\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":2}]}",
       "3ad8514c-df4f-6439-c99c-e1e985088af7": "{\"id\":\"3ad8514c-df4f-6439-c99c-e1e985088af7\",\"title\":\"Test 3\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"BTC\",\"amount\":\"10\"}]}",
       "0fdd7782-0d38-6a04-6e4d-d488e42c57e4": "{\"id\":\"0fdd7782-0d38-6a04-6e4d-d488e42c57e4\",\"title\":\"Test 4\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"BTC\",\"amount\":\"5\"}]}",
-      "014dda9f-901c-5881-0f43-a346e8d8e548": "{\"id\":\"014dda9f-901c-5881-0f43-a346e8d8e548\",\"title\":\"Test 5\",\"description\":\"Description\",\"tribute\":0,\"shares\":100,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}"
+      "014dda9f-901c-5881-0f43-a346e8d8e548": "{\"id\":\"014dda9f-901c-5881-0f43-a346e8d8e548\",\"title\":\"Test 5\",\"description\":\"Description\",\"tribute\":0,\"shares\":100,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}",
+      "7e9b0235-08a8-37a0-2246-5b934b9a3478": "{\"id\":\"7e9b0235-08a8-37a0-2246-5b934b9a3478\",\"title\":\"Test 6\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}"
+    },
+    "Member": {
+      "0x091fecd2b293f1ebddd2e72b83de5386c020ca52": "{\"publicAddress\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"nonce\":842929,\"name\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"title\":\"Patch 1\",\"shares\":100,\"value\":0,\"description\":\"Description\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}],\"votes\":[],\"status\":\"waiting\"}",
+      "0xaa22d833fc31f74c13613aec5ed3c2955c968a97": "{\"publicAddress\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"nonce\":942763,\"name\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"title\":\"\",\"shares\":0,\"value\":0,\"description\":\"\",\"assets\":[],\"votes\":[],\"status\":\"waiting\"}"
     }
   }
 }
