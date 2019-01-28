@@ -10,17 +10,28 @@ export class Period extends Entity {
   id: string;
 
   @property({
-    type: 'number',
+    type: 'date',
     required: true,
   })
-  value: number;
+  start: Date;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  end: Date;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  gracePeriod: Date;
 
   @property({
     type: 'array',
     itemType: 'object',
-    required: true,
   })
-  periods: object[];
+  proposals: object[];
 
 
   constructor(data?: Partial<Period>) {

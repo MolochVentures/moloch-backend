@@ -5,3 +5,5 @@ export * from './event.controller';
 export * from './founder.controller';
 export * from './period.controller';
 export * from './proposal.controller';
+export * from './config.controller';
+export * from './project.controller';

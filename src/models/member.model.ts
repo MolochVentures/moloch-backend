@@ -7,7 +7,7 @@ export class Member extends Entity {
     id: true,
     required: true,
   })
-  publicAddress: string;
+  address: string;
 
   @property({
     type: 'number',
@@ -18,22 +18,27 @@ export class Member extends Entity {
   @property({
     type: 'string',
   })
-  description?: string;
+  name?: string;
 
   @property({
     type: 'string',
   })
-  name?: string;
+  title?: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  value?: number;
+  description?: string;
 
   @property({
     type: 'number',
   })
   shares?: number;
+
+  @property({
+    type: 'number',
+  })
+  tribute?: number;
 
   @property({
     type: 'string',
@@ -50,7 +55,13 @@ export class Member extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  votes?: object[];
+  voters?: object[];
+
+  @property({
+    type: 'array',
+    itemType: 'object',
+  })
+  proposals?: object[];
 
 
   constructor(data?: Partial<Member>) {

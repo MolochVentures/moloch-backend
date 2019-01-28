@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Founder extends Entity {
@@ -7,7 +7,7 @@ export class Founder extends Entity {
     id: true,
     required: true,
   })
-  publicAddress: string;
+  address: string;
 
   @property({
     type: 'string',
