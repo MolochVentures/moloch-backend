@@ -20,13 +20,13 @@ export class ProposalController {
   ) { }
 
   /**
-   * Creates a new project proposal
+   * Creates a new project proposal.
    * @param proposal: project proposal to be created
    */
   @post('/proposals/projectproposal', {
     responses: {
       '200': {
-        description: 'Submits a project proposal',
+        description: 'Proposal created',
         content: { 'application/json': { schema: { 'x-ts-type': Proposal } } },
       },
     },
@@ -37,15 +37,19 @@ export class ProposalController {
     };
     proposal.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     proposal.status = 'waiting';
-    proposal.closingTime = '';
-    proposal.gracePeriod = '';
+    proposal.period = 0;
     return await this.proposalRepository.create(proposal);
   }
 
+  /**
+   * Modifies an existing proposal.
+   * @param id: id of the proposal to be modified.
+   * @param proposal: data of the modifications to be applied.
+   */
   @patch('/proposals/{id}', {
     responses: {
       '204': {
-        description: 'Period PATCH success',
+        description: 'Proposal modified',
       },
     },
   })
@@ -56,10 +60,13 @@ export class ProposalController {
     await this.proposalRepository.updateById(id, proposal);
   }
 
+  /**
+   * Returns all the proposals.
+   */
   @get('/proposals', {
     responses: {
       '200': {
-        description: 'Array of Proposal model instances',
+        description: 'Proposals retrieved',
         content: {
           'application/json': {
             schema: { type: 'array', items: { 'x-ts-type': Proposal } },
@@ -72,28 +79,14 @@ export class ProposalController {
     return await this.proposalRepository.find();
   }
 
-  @get('/proposals/getfiltered', {
-    responses: {
-      '200': {
-        description: 'Array of Proposal model instances',
-        content: {
-          'application/json': {
-            schema: { type: 'array', items: { 'x-ts-type': Proposal } },
-          },
-        },
-      },
-    },
-  })
-  async find(
-    @param.query.object('filter', getFilterSchemaFor(Proposal)) filter?: Filter,
-  ): Promise<Proposal[]> {
-    return await this.proposalRepository.find(filter);
-  }
-
+  /**
+   * Returns a proposal given its id.
+   * @param id: id of the proposal to be returned.
+   */
   @get('/proposals/{id}', {
     responses: {
       '200': {
-        description: 'Proposal model instance',
+        description: 'Proposal retrieved',
         content: { 'application/json': { schema: { 'x-ts-type': Proposal } } },
       },
     },

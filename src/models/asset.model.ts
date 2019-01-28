@@ -7,12 +7,13 @@ export class Asset extends Entity {
     id: true,
     required: true,
   })
-  publicAddress: string;
+  address: string;
 
   @property({
     type: 'string',
+    required: true,
   })
-  symbol: string; // TODO: Make it required again
+  symbol: string;
 
   @property({
     type: 'number',
@@ -22,13 +23,27 @@ export class Asset extends Entity {
 
   @property({
     type: 'number',
+    required: true,
   })
-  price: number; // TODO: Make it required again
+  price: number;
 
   @property({
     type: 'string',
+    required: true,
   })
-  logo: string; // TODO: Make it required again
+  logo: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  priceFeed: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  txs: string;
 
 
   constructor(data?: Partial<Asset>) {

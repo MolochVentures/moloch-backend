@@ -1,27 +1,16 @@
 {
   "ids": {
-    "User": 1.112671014000922e+48,
-    "Proposal": 7,
-    "Member": 9.713054903201896e+47
+    "Member": 9.713054903201896e+47,
+    "Project": 2
   },
   "models": {
-    "User": {
-      "0x091fecd2b293f1ebddd2e72b83de5386c020ca52": "{\"publicAddress\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"nonce\":362091}",
-      "0xaa22d833fc31f74c13613aec5ed3c2955c968a97": "{\"publicAddress\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"nonce\":574429}",
-      "0x1cbf9ced4112efc554f9086b6048d3c244fc05d1": "{\"publicAddress\":\"0x1cbf9ced4112efc554f9086b6048d3c244fc05d1\",\"nonce\":974629}",
-      "0xc2e5e4d434587c5915bad0395871b7ce9d58bbf4": "{\"publicAddress\":\"0xc2e5e4d434587c5915bad0395871b7ce9d58bbf4\",\"nonce\":453388}"
-    },
-    "Proposal": {
-      "9908cb63-817d-f9b3-df61-77a91c0353a9": "{\"id\":\"9908cb63-817d-f9b3-df61-77a91c0353a9\",\"title\":\"Test 1\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":2}]}",
-      "71410b83-e916-e15e-910c-0f8a6d21bd92": "{\"id\":\"71410b83-e916-e15e-910c-0f8a6d21bd92\",\"title\":\"Test 2\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":2}]}",
-      "3ad8514c-df4f-6439-c99c-e1e985088af7": "{\"id\":\"3ad8514c-df4f-6439-c99c-e1e985088af7\",\"title\":\"Test 3\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"BTC\",\"amount\":\"10\"}]}",
-      "0fdd7782-0d38-6a04-6e4d-d488e42c57e4": "{\"id\":\"0fdd7782-0d38-6a04-6e4d-d488e42c57e4\",\"title\":\"Test 4\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"BTC\",\"amount\":\"5\"}]}",
-      "014dda9f-901c-5881-0f43-a346e8d8e548": "{\"id\":\"014dda9f-901c-5881-0f43-a346e8d8e548\",\"title\":\"Test 5\",\"description\":\"Description\",\"tribute\":0,\"shares\":100,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}",
-      "7e9b0235-08a8-37a0-2246-5b934b9a3478": "{\"id\":\"7e9b0235-08a8-37a0-2246-5b934b9a3478\",\"title\":\"Test 6\",\"description\":\"Description\",\"tribute\":0,\"shares\":0,\"status\":\"waiting\",\"closingTime\":\"\",\"gracePeriod\":\"\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}"
-    },
     "Member": {
-      "0x091fecd2b293f1ebddd2e72b83de5386c020ca52": "{\"publicAddress\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"nonce\":842929,\"name\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"title\":\"Patch 1\",\"shares\":100,\"value\":0,\"description\":\"Description\",\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}],\"votes\":[],\"status\":\"waiting\"}",
-      "0xaa22d833fc31f74c13613aec5ed3c2955c968a97": "{\"publicAddress\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"nonce\":942763,\"name\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"title\":\"\",\"shares\":0,\"value\":0,\"description\":\"\",\"assets\":[],\"votes\":[],\"status\":\"waiting\"}"
-    }
+      "0xaa22d833fc31f74c13613aec5ed3c2955c968a97": "{\"address\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"nonce\":87397,\"title\":\"Membership 1\",\"description\":\"A witcher (also wiccan or hexer or vedymin; in the Elder Speech: vatt'ghern) is someone who has undergone extensive training, ruthless mental and physical conditioning, and mysterious rituals (which take place at \\\"witcher schools\\\" such as Kaer Morhen) in preparation for becoming an itinerant monsterslayer for hire. Geralt, the central character in Andrzej Sapkowski's Witcher series and the subsequent games inspired by them, is said in the stories to be one of the greatest witchers; he is certainly legendary, but whether famous or infamous is more open to interpretation (and/or subject to gameplay, as the case may be).\",\"shares\":100,\"tribute\":0,\"assets\":[{\"asset\":\"0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2\",\"amount\":\"5\"}],\"name\":\"0xaa22d833fc31f74c13613aec5ed3c2955c968a97\",\"status\":\"pending\",\"voters\":[],\"proposals\":[]}",
+      "0x091fecd2b293f1ebddd2e72b83de5386c020ca52": "{\"address\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"nonce\":283130,\"title\":\"Membership 2\",\"description\":\"Kaer Morhen (Elder Speech: Caer a'Muirehen, meaning Keep of the Elder Sea) is an old keep where witchers used to be trained. The name is a corruption of Caer a'Muirehen, revealing that there used to be sea around it, which is further indicated by the presence of fossilized sea creatures embedded in the stones on which it was built.[1] However, by the 1200s it is located in the mountains of the kingdom of Kaedwen, right off the Gwenllech river.\",\"shares\":200,\"tribute\":0,\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}],\"name\":\"0x091fecd2b293f1ebddd2e72b83de5386c020ca52\",\"status\":\"pending\",\"voters\":[],\"proposals\":[]}"
+    },
+    "Project": {
+      "0783d41f-8880-0280-7e77-b76ec0fb52f8": "{\"id\":\"0783d41f-8880-0280-7e77-b76ec0fb52f8\",\"title\":\"Project 1\",\"description\":\"The Path is a term witchers use to describe traveling the various parts of the world hunting down monsters. Witchers travel the Continent looking for contracts to fulfill, there is no stated limit to what constitutes a contract; a witcher could be tasked with killing a werewolf, eliminating a nest of drowners, or investigating the mysterious deaths of people at the hand of a potential monster. Towards the onset of winter, witchers reconvene at their respective keeps to wait out the cold season. Vesemir from the School of the Wolf states that wintering at the witchers' keeps is usually done by witchers who have been unable to integrate into society.\\nAs described in The Witcher 3: Wild Hunt, they'll wait out the winter and once spring comes along they're back out plying their trade. Witchers are trained to work alone but on occasion have been known to partner up on a contract and split the reward.\",\"tribute\":0,\"status\":\"pending\",\"period\":0,\"assets\":[{\"asset\":\"ETH\",\"amount\":\"5\"}]}"
+    },
+    "Asset": {}
   }
 }

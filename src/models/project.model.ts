@@ -1,7 +1,7 @@
 import { Entity, model, property } from '@loopback/repository';
 
 @model()
-export class Proposal extends Entity {
+export class Project extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -23,26 +23,31 @@ export class Proposal extends Entity {
 
   @property({
     type: 'number',
+  })
+  shares?: number;
+
+  @property({
+    type: 'number',
     required: true,
   })
   tribute: number;
 
   @property({
-    type: 'number',
-  })
-  shares: number;
-
-  @property({
     type: 'string',
-    required: true,
   })
-  status: string;
+  status?: string;
 
   @property({
     type: 'number',
+  })
+  period?: number;
+
+  @property({
+    type: 'array',
+    itemType: 'object',
     required: true,
   })
-  period: number;
+  assets: object[];
 
   @property({
     type: 'array',
@@ -51,7 +56,7 @@ export class Proposal extends Entity {
   voters?: object[];
 
 
-  constructor(data?: Partial<Proposal>) {
+  constructor(data?: Partial<Project>) {
     super(data);
   }
 }
