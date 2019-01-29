@@ -46,6 +46,11 @@ export class Member extends Entity {
   status?: string;
 
   @property({
+    type: 'number',
+  })
+  period?: number;
+
+  @property({
     type: 'array',
     itemType: 'object',
   })

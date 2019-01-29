@@ -113,6 +113,7 @@ export class MemberController {
     member.status = 'pending';
     member.voters = [];
     member.proposals = [];
+    member.period = 0;
     return await this.memberRepository.updateById(address, member).then(result => { return member });
   }
 }

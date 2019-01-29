@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import { Entity, model, property } from '@loopback/repository';
 
 @model()
 export class Event extends Entity {
@@ -7,13 +7,19 @@ export class Event extends Entity {
     id: true,
     required: true,
   })
-  name: string;
+  id: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  payload: string;
+  name: string;
+
+  @property({
+    type: 'object',
+    required: true,
+  })
+  payload: object;
 
 
   constructor(data?: Partial<Event>) {
