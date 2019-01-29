@@ -6,38 +6,34 @@ import {
   get,
   requestBody,
 } from '@loopback/rest';
-import { Event } from '../models';
-import { EventRepository } from '../repositories';
+import {
+  Event,
+  Member,
+  Project
+} from '../models';
+import {
+  EventRepository,
+  MemberRepository,
+  ProjectRepository
+} from '../repositories';
 
 export class EventController {
   constructor(
     @repository(EventRepository)
     public eventRepository: EventRepository,
+    @repository(MemberRepository)
+    public memberRepository: MemberRepository,
+    @repository(ProjectRepository)
+    public projectRepository: ProjectRepository,
   ) { }
 
   /**
-   * Creates an event.
-   * @param event: event to be created.
-   */
-  @post('/events', {
-    responses: {
-      '200': {
-        description: 'Creates an event.',
-        content: { 'application/json': { schema: { 'x-ts-type': Event } } },
-      },
-    },
-  })
-  async create(@requestBody() event: Event): Promise<Event> {
-    return await this.eventRepository.create(event);
-  }
-
-  /**
-   * Returns all the events.
+   * Returns all existing events.
    */
   @get('/events', {
     responses: {
       '200': {
-        description: 'Returns all the events.',
+        description: 'Returned all events.',
         content: {
           'application/json': {
             schema: { type: 'array', items: { 'x-ts-type': Event } },
@@ -46,7 +42,65 @@ export class EventController {
       },
     },
   })
-  async find(): Promise<Event[]> {
+  async findAll(): Promise<Event[]> {
     return await this.eventRepository.find();
+  }
+
+  /**
+   * Creates a event.
+   * @param event: event to be created.
+   */
+  @post('/events', {
+    responses: {
+      '200': {
+        description: 'Event created.',
+        content: { 'application/json': { schema: { 'x-ts-type': Event } } },
+      },
+    },
+  })
+  async create(@requestBody() event: Event): Promise<Event> {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    event.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    switch (event.name) {
+      case 'User creation':
+        var memberCreate = event.payload as Member;
+        memberCreate.nonce = Math.floor(Math.random() * 1000000);
+        return await this.memberRepository.create(memberCreate).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Membership proposal':
+        var memberPatch = event.payload as Member;
+        memberPatch.name = memberPatch.address;
+        memberPatch.status = 'pending';
+        memberPatch.voters = [];
+        memberPatch.proposals = [];
+        memberPatch.period = 0;
+        return await this.memberRepository.updateById(memberPatch.address, memberPatch).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Project proposal':
+        var projectCreate = event.payload as Project;
+        projectCreate.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+        projectCreate.status = 'pending';
+        projectCreate.period = 0;
+        return await this.projectRepository.create(projectCreate).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Project proposal voted':
+        var projectVoted = event.payload as Project;
+        console.log(projectVoted);
+        return await this.projectRepository.updateById(projectVoted.id, projectVoted).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Project proposal processed':
+        var projectProcessed = event.payload as Project;
+        projectProcessed.status = 'accepted';
+        return await this.projectRepository.updateById(projectProcessed.id, projectProcessed).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+    }
+    return await this.eventRepository.create(event).then(result => { return event });
   }
 }

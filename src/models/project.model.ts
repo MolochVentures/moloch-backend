@@ -23,11 +23,6 @@ export class Project extends Entity {
 
   @property({
     type: 'number',
-  })
-  shares?: number;
-
-  @property({
-    type: 'number',
     required: true,
   })
   tribute: number;
