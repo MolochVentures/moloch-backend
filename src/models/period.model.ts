@@ -1,6 +1,21 @@
 import { Entity, model, property } from '@loopback/repository';
 
 @model()
+class Proposal {
+  @property({
+    type: 'string',
+    required: true,
+  })
+  id: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  type: string;
+}
+
+@model()
 export class Period extends Entity {
   @property({
     type: 'string',
@@ -31,7 +46,7 @@ export class Period extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  proposals: object[];
+  proposals: Proposal[];
 
 
   constructor(data?: Partial<Period>) {

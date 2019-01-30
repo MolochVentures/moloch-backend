@@ -9,11 +9,13 @@ import {
 import {
   Event,
   Member,
+  Period,
   Project
 } from '../models';
 import {
   EventRepository,
   MemberRepository,
+  PeriodRepository,
   ProjectRepository
 } from '../repositories';
 
@@ -23,6 +25,8 @@ export class EventController {
     public eventRepository: EventRepository,
     @repository(MemberRepository)
     public memberRepository: MemberRepository,
+    @repository(PeriodRepository)
+    public periodRepository: PeriodRepository,
     @repository(ProjectRepository)
     public projectRepository: ProjectRepository,
   ) { }
@@ -90,7 +94,6 @@ export class EventController {
         });
       case 'Project proposal voted':
         var projectVoted = event.payload as Project;
-        console.log(projectVoted);
         return await this.projectRepository.updateById(projectVoted.id, projectVoted).then(async result => {
           return await this.eventRepository.create(event);
         });
@@ -98,6 +101,12 @@ export class EventController {
         var projectProcessed = event.payload as Project;
         projectProcessed.status = 'accepted';
         return await this.projectRepository.updateById(projectProcessed.id, projectProcessed).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Period creation':
+        var periodCreated = event.payload as Period;
+        periodCreated.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+        return await this.periodRepository.create(periodCreated).then(async result => {
           return await this.eventRepository.create(event);
         });
     }

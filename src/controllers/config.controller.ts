@@ -3,7 +3,9 @@ import {
 } from '@loopback/repository';
 import {
   get,
+  post,
   param,
+  requestBody,
 } from '@loopback/rest';
 import { Config } from '../models';
 import { ConfigRepository } from '../repositories';
@@ -28,5 +30,25 @@ export class ConfigController {
   })
   async findById(@param.path.string('id') id: string): Promise<Config> {
     return await this.configRepository.findById(id);
+  }
+
+  /**
+   * Creates a config.
+   * @param config: config to be created.
+   */
+  @post('/configs', {
+    responses: {
+      '200': {
+        description: 'Config created.',
+        content: { 'application/json': { schema: { 'x-ts-type': Config } } },
+      },
+    },
+  })
+  async create(@requestBody() config: Config): Promise<Config> {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    config.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    return await this.configRepository.create(config);
   }
 }

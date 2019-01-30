@@ -10,11 +10,29 @@ export class Config extends Entity {
   id: string;
 
   @property({
-    type: 'object',
+    type: 'date',
     required: true,
   })
-  configuration: object;
+  start: Date;
 
+  @property({
+    type: 'number',
+    required: true,
+  })
+  periodLength: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  gracePeriod: number;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    required: true,
+  })
+  founders: string[];
 
   constructor(data?: Partial<Config>) {
     super(data);
