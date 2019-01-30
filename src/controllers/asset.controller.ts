@@ -33,20 +33,4 @@ export class AssetController {
   async findAll(): Promise<Asset[]> {
     return await this.assetRepository.find();
   }
-
-  /**
-   * Creates a asset.
-   * @param asset: asset to be created.
-   */
-  @post('/assets', {
-    responses: {
-      '200': {
-        description: 'Asset created.',
-        content: { 'application/json': { schema: { 'x-ts-type': Asset } } },
-      },
-    },
-  })
-  async create(@requestBody() asset: Asset): Promise<Asset> {
-    return await this.assetRepository.create(asset);
-  }
 }
