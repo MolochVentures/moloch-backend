@@ -103,6 +103,17 @@ export class EventController {
         return await this.projectRepository.updateById(projectProcessed.id, projectProcessed).then(async result => {
           return await this.eventRepository.create(event);
         });
+      case 'Membership proposal voted':
+        var memberVoted = event.payload as Member;
+        return await this.memberRepository.updateById(memberVoted.address, memberVoted).then(async result => {
+          return await this.eventRepository.create(event);
+        });
+      case 'Membership proposal processed':
+        var memberProcessed = event.payload as Member;
+        memberProcessed.status = 'active';
+        return await this.memberRepository.updateById(memberProcessed.address, memberProcessed).then(async result => {
+          return await this.eventRepository.create(event);
+        });
       case 'Period creation':
         var periodCreated = event.payload as Period;
         periodCreated.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
