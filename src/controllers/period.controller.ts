@@ -16,10 +16,8 @@ export class PeriodController {
   constructor(
     @repository(MemberRepository)
     public memberRepository: MemberRepository,
-
     @repository(PeriodRepository)
     public periodRepository: PeriodRepository,
-
     @repository(ProjectRepository)
     public projectRepository: ProjectRepository,
   ) { }
