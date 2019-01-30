@@ -7,12 +7,14 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
+  Asset,
   Event,
   Member,
   Period,
   Project
 } from '../models';
 import {
+  AssetRepository,
   EventRepository,
   MemberRepository,
   PeriodRepository,
@@ -21,6 +23,8 @@ import {
 
 export class EventController {
   constructor(
+    @repository(AssetRepository)
+    public assetRepository: AssetRepository,
     @repository(EventRepository)
     public eventRepository: EventRepository,
     @repository(MemberRepository)
@@ -120,7 +124,29 @@ export class EventController {
         return await this.periodRepository.create(periodCreated).then(async result => {
           return await this.eventRepository.create(event);
         });
+      case 'Asset creation':
+        var assetCreated = event.payload as Asset;
+        return await this.assetRepository.findById(assetCreated.address).then(async result => {
+          if (result) {
+            console.log("update asset");
+            assetCreated.amount = assetCreated.amount + result.amount;
+            return await this.assetRepository.updateById(assetCreated.address, assetCreated).then(async result => {
+              return await this.eventRepository.create(event);
+            });
+          } else {
+            console.log("create asset");
+            return await this.assetRepository.create(assetCreated).then(async result => {
+              return await this.eventRepository.create(event);
+            });
+          }
+        }).catch(async error => {
+          console.log("create asset");
+          return await this.assetRepository.create(assetCreated).then(async result => {
+            return await this.eventRepository.create(event);
+          });
+        });
     }
+    event.name = "Error: Unidentified event";
     return await this.eventRepository.create(event).then(result => { return event });
   }
 }

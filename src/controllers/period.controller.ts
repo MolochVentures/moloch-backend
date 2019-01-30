@@ -55,10 +55,14 @@ export class PeriodController {
       let memberIds = response[0].proposals.filter(proposal => proposal.type === 'member').map(member => member.id);
       // Get the complete data of the members inside that period.
       return await this.memberRepository.find({ where: { address: { inq: memberIds } } }).then(async (members: Array<any>) => {
-        proposals.push(members);
+        members.forEach(member => {
+          proposals.push(member);
+        });
         // Get the complete data of the projects inside that period.
         return await this.projectRepository.find({ where: { id: { inq: projectIds } } }).then(async (projects: Array<any>) => {
-          proposals.push(projects);
+          projects.forEach(project => {
+            proposals.push(project);
+          });
           // Return an array with members and projects inside that period.
           return proposals;
         })
