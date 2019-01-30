@@ -7,13 +7,21 @@ import {
   param,
   requestBody,
 } from '@loopback/rest';
-import { Config } from '../models';
-import { ConfigRepository } from '../repositories';
+import {
+  Config,
+  Member
+} from '../models';
+import {
+  ConfigRepository,
+  MemberRepository
+} from '../repositories';
 
 export class ConfigController {
   constructor(
     @repository(ConfigRepository)
     public configRepository: ConfigRepository,
+    @repository(MemberRepository)
+    public memberRepository: MemberRepository,
   ) { }
 
   /**
@@ -50,5 +58,24 @@ export class ConfigController {
     };
     config.id = (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
     return await this.configRepository.create(config);
+  }
+
+  /**
+   * Returns the founders.
+   */
+  @get('/configs/getfounders', {
+    responses: {
+      '200': {
+        description: 'Returned config by id.',
+        content: { 'application/json': { schema: { 'x-ts-type': Config } } },
+      },
+    },
+  })
+  async getFounders(): Promise<Member[]> {
+    return await this.configRepository.find().then(async result => {
+      return await this.memberRepository.find({ where: { address: { inq: result[0].founders } } }).then(async members => {
+        return members;
+      })
+    });
   }
 }
