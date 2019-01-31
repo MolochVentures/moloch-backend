@@ -1,6 +1,27 @@
 import { Entity, model, property } from '@loopback/repository';
 
 @model()
+class Voter {
+  @property({
+    type: 'string',
+    required: true,
+  })
+  member: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  vote: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  shares: number;
+}
+
+@model()
 export class Project extends Entity {
   @property({
     type: 'string',
@@ -48,7 +69,7 @@ export class Project extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  voters?: object[];
+  voters?: Voter[];
 
 
   constructor(data?: Partial<Project>) {
