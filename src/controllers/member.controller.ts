@@ -51,7 +51,6 @@ export class MemberController {
       let totalShares = 0;
       members.forEach(member => { totalShares = totalShares + (member.shares ? member.shares : 0) });
       return await this.memberRepository.findById(id).then(async matchingMember => {
-        matchingMember.shares = matchingMember.status && (matchingMember.status === 'active' || matchingMember.status === 'founder') ? matchingMember.shares : 0;
         let result = {
           member: matchingMember,
           totalShares: totalShares
