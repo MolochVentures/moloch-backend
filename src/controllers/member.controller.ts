@@ -1,5 +1,6 @@
 import {
   repository,
+  AnyType,
 } from '@loopback/repository';
 import {
   param,
@@ -41,11 +42,22 @@ export class MemberController {
     responses: {
       '200': {
         description: 'Returned member by id.',
-        content: { 'application/json': { schema: { 'x-ts-type': Member } } },
+        content: { 'application/json': { schema: { 'x-ts-type': AnyType } } },
       },
     },
   })
-  async findById(@param.path.string('id') id: string): Promise<Member> {
-    return await this.memberRepository.findById(id);
+  async findById(@param.path.string('id') id: string): Promise<any> {
+    return await this.memberRepository.find().then(async members => {
+      let totalShares = 0;
+      members.forEach(member => { totalShares = totalShares + (member.shares ? member.shares : 0) });
+      return await this.memberRepository.findById(id).then(async matchingMember => {
+        matchingMember.shares = matchingMember.status && matchingMember.status === 'active' ? matchingMember.shares : 0;
+        let result = {
+          member: matchingMember,
+          totalShares: totalShares
+        }
+        return result;
+      });
+    });
   }
 }
