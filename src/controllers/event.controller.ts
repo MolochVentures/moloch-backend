@@ -128,19 +128,16 @@ export class EventController {
         var assetCreated = event.payload as Asset;
         return await this.assetRepository.findById(assetCreated.address).then(async result => {
           if (result) {
-            console.log("update asset");
             assetCreated.amount = assetCreated.amount + result.amount;
             return await this.assetRepository.updateById(assetCreated.address, assetCreated).then(async result => {
               return await this.eventRepository.create(event);
             });
           } else {
-            console.log("create asset");
             return await this.assetRepository.create(assetCreated).then(async result => {
               return await this.eventRepository.create(event);
             });
           }
         }).catch(async error => {
-          console.log("create asset");
           return await this.assetRepository.create(assetCreated).then(async result => {
             return await this.eventRepository.create(event);
           });
