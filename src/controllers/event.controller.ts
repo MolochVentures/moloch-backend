@@ -21,6 +21,7 @@ import {
   PeriodRepository,
   ProjectRepository
 } from '../repositories';
+import { HttpError } from 'http-errors';
 
 export class EventController {
   constructor(
@@ -69,7 +70,7 @@ export class EventController {
       },
     },
   })
-  async create(@requestBody() event: Event): Promise<Event> {
+  async create(@requestBody() event: Event): Promise<any> {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -142,7 +143,7 @@ export class EventController {
           let gracePeriodLength = config[0].gracePeriod;
           // Current date at midnight
           let currentDate = new Date();
-          currentDate.setHours(0, 0, 0, 0);
+          currentDate.setHours(1, 0, 0, 0);
           // Check if there is a period for the current date
           return await this.periodRepository.find({ where: { start: { eq: currentDate } } }).then(async period => {
             let periodCreate: Period = new Period;
@@ -212,7 +213,7 @@ export class EventController {
             if (!member.proposals) {
               member.proposals = [];
             }
-            member.proposals.push({ id: memberVoted.address, title: memberVoted.title, vote: lastMemberVoter.vote, date: new Date() });
+            member.proposals.push({ id: memberVoted.address, title: memberVoted.title ? memberVoted.title : '', vote: lastMemberVoter.vote, date: new Date() });
             return await this.memberRepository.updateById(member.address, member).then(async updatedMember => {
               return await this.eventRepository.create(event);
             });
@@ -248,6 +249,54 @@ export class EventController {
             return await this.eventRepository.create(event);
           });
         });
+      case 'Redeem loot token':
+        let addressRedeemed = (event.payload as Member).address;
+        // Get the full data of the member that will redeem its shares
+        return await this.memberRepository.findById(addressRedeemed).then(async member => {
+          // Get all the current periods that have a gracePeriod above the current date
+          return await this.periodRepository.find({ where: { start: { lte: new Date() }, gracePeriod: { gte: new Date() } } }).then(async periods => {
+            let memberProposals = member.proposals ? member.proposals : [];
+            let canRedeem = true;
+            // Check the gracePeriod of any of the proposals in which the member has voted is above the current date
+            memberProposals.forEach(proposal => {
+              periods.forEach(period => {
+                period.proposals.forEach(periodProposal => {
+                  if (periodProposal.id === proposal.id) {
+                    canRedeem = false;
+                  }
+                });
+              });
+            });
+            // Only redeem if none of the proposals matched the previous condition
+            if (canRedeem) {
+              // We can redeem, so first we get the total shares of the system and calculate the percentage represented by the user redeeming
+              return await this.memberRepository.find().then(async members => {
+                let totalShares = 0;
+                let redeemingMemberShares = member.shares ? member.shares : 0;
+                members.forEach(member => { totalShares = totalShares + (member.shares ? member.shares : 0) });
+                return await this.assetRepository.find().then(async assets => {
+                  assets.forEach(asset => {
+                    asset.amount = asset.amount - (asset.amount * redeemingMemberShares / totalShares);
+                    this.assetRepository.updateById(asset.address, asset);
+                  });
+                  member.status = 'inactive';
+                  member.shares = 0;
+                  return await this.memberRepository.updateById(member.address, member).then(async result => {
+                    return await this.eventRepository.create(event);
+                  });
+                });
+              });
+            } else {
+              event.name = "Error on Redeem loot token";
+              return await this.eventRepository.create(event).then(async result => {
+                let error: HttpError = new HttpError;
+                error.status = 400;
+                error.message = "The member is still within the grace period of a voted proposal."
+                return await error;
+              });
+            }
+          })
+        })
     }
     event.name = "Error: Unidentified event";
     return await this.eventRepository.create(event).then(result => { return event });

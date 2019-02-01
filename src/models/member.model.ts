@@ -22,6 +22,33 @@ class Voter {
 }
 
 @model()
+class Proposal {
+  @property({
+    type: 'string',
+    required: true,
+  })
+  id: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  title: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  vote: string;
+
+  @property({
+    type: 'date',
+    required: true,
+  })
+  date: Date;
+}
+
+@model()
 export class Member extends Entity {
   @property({
     type: 'string',
@@ -87,7 +114,7 @@ export class Member extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  proposals?: object[];
+  proposals?: Proposal[];
 
 
   constructor(data?: Partial<Member>) {
