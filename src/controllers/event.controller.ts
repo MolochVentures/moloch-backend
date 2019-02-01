@@ -92,7 +92,7 @@ export class EventController {
           let gracePeriodLength = config[0].gracePeriod;
           // Current date at midnight
           let currentDate = new Date();
-          currentDate.setHours(0, 0, 0, 0);
+          currentDate.setHours(1, 0, 0, 0);
           // Check if there is a period for the current date
           return await this.periodRepository.find({ where: { start: { eq: currentDate } } }).then(async period => {
             let periodCreate: Period = new Period;
@@ -190,7 +190,7 @@ export class EventController {
             if (!member.proposals) {
               member.proposals = [];
             }
-            member.proposals.push({ id: projectVoted.id, vote: lastProjectVoter.vote });
+            member.proposals.push({ id: projectVoted.id, title: projectVoted.title, vote: lastProjectVoter.vote, date: new Date() });
             return await this.memberRepository.updateById(member.address, member).then(async updatedMember => {
               return await this.eventRepository.create(event);
             });
@@ -212,7 +212,7 @@ export class EventController {
             if (!member.proposals) {
               member.proposals = [];
             }
-            member.proposals.push({ id: memberVoted.address, vote: lastMemberVoter.vote });
+            member.proposals.push({ id: memberVoted.address, title: memberVoted.title, vote: lastMemberVoter.vote, date: new Date() });
             return await this.memberRepository.updateById(member.address, member).then(async updatedMember => {
               return await this.eventRepository.create(event);
             });
