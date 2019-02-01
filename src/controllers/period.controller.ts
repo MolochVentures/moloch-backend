@@ -144,27 +144,5 @@ export class PeriodController {
         });
       }
     });
-    /*
-    // Get the current period.
-    return await this.periodRepository.find(filterCurrent).then(async response => {
-      let proposals: Array<any> = [];
-      let projectIds = response[0].proposals.filter(proposal => proposal.type === 'project').map(project => project.id);
-      let memberIds = response[0].proposals.filter(proposal => proposal.type === 'member').map(member => member.id);
-      // Get the complete data of the members inside that period.
-      return await this.memberRepository.find({ where: { address: { inq: memberIds } } }).then(async (members: Array<any>) => {
-        members.forEach(member => {
-          proposals.push(member);
-        });
-        // Get the complete data of the projects inside that period.
-        return await this.projectRepository.find({ where: { id: { inq: projectIds } } }).then(async (projects: Array<any>) => {
-          projects.forEach(project => {
-            proposals.push(project);
-          });
-          // Return an array with members and projects inside that period.
-          return proposals;
-        })
-      });
-    });
-    */
   }
 }
